@@ -1,13 +1,15 @@
-import React from 'react';
-import App from './App';
-import { ApolloClient, InMemoryCache, gql, ApolloProvider, createHttpLink } from '@apollo/client';
-const httpLink = createHttpLink({
-    uri: 'http://localhost:5000'
-});
+import React from "react";
+import App from "./App";
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink,
+} from "@apollo/client";
 
 const client = new ApolloClient({
-  uri: httpLink,
-  cache: new InMemoryCache()
+  uri: "http://localhost:5000/",
+  cache: new InMemoryCache(),
 });
 // client
 //   .query({
@@ -21,8 +23,8 @@ const client = new ApolloClient({
 //   })
 //   .then(result => console.log(result));
 
-export default(
-    <ApolloProvider client = {client}>
-        <App />
-    </ApolloProvider>
-)
+export default (
+  <ApolloProvider client={client}>
+    <App />
+  </ApolloProvider>
+);
