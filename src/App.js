@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import "semantic-ui-css/semantic.min.css";
 
 import { AuthProvider } from "./context/auth";
+import AuthRoute from './utils/AuthRoute';
 
 import Home from "./pages/Home";
 import Register from "./pages/Register";
@@ -15,9 +16,8 @@ function App() {
       <Router className="App">
         <Menubar />
         <Route exact path="/" component={Home} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/register" component={Register} />
-        Helloworld!
+        <AuthRoute exact path="/login" component={Login} />
+        <AuthRoute exact path="/register" component={Register} />
       </Router>
     </AuthProvider>
   );

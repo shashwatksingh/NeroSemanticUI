@@ -1,8 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Menu } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 
+import { AuthContext } from "../context/auth";
+
 const MenuBar = () => {
+  //Showing different window based on the condition if the user is logged in or not
+  const { user, logout } = useContext(AuthContext);
+
   //path speicific switching
   const pathname = window.location.pathname;
   //about the path
@@ -11,7 +16,16 @@ const MenuBar = () => {
 
   const handleItemClick = (e, { name }) => setActiveItem(name);
 
-  return (
+  const menuBar = user ? (
+    <div>
+      <Menu pointing secondary size="massive" color="teal">
+        <Menu.Item name={user.username} active as={Link} to="/" />
+        <Menu.Menu position="right">
+          <Menu.Item name="logout" onClick={logout} />
+        </Menu.Menu>
+      </Menu>
+    </div>
+  ) : (
     <div>
       <Menu pointing secondary size="massive" color="teal">
         <Menu.Item
@@ -40,6 +54,8 @@ const MenuBar = () => {
       </Menu>
     </div>
   );
+
+  return menuBar;
 };
 
 export default MenuBar;
