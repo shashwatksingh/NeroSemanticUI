@@ -4,7 +4,7 @@ const AuthContext = createContext({
   login: (userData) => {},
   logout: () => {},
 });
-
+//receives action on the basis of type and payload. It then decided what to do with the payload.
 function authReducer(state, action) {
   switch (action.type) {
     case "LOGIN":
@@ -24,20 +24,23 @@ function authReducer(state, action) {
 
 function AuthProvider(props) {
   const [state, dispatch] = useReducer(authReducer, { user: null });
-  function login(userData){
-      dispatch({
-          type : 'LOGIN',
-          payload : userData
-      })
+  function login(userData) {
+    dispatch({
+      type: "LOGIN",
+      payload: userData,
+    });
   }
-  function logout(){
-      dispatch({
-        type : 'LOGOUT',
-      });
+  function logout() {
+    dispatch({
+      type: "LOGOUT",
+    });
   }
   return (
-      <AuthContext.Provider value={{ user : state.user, login, logout }} { ...props } />
-  )
+    <AuthContext.Provider
+      value={{ user: state.user, login, logout }}
+      {...props}
+    />
+  );
 }
 
-export { AuthContext, AuthProvider }
+export { AuthContext, AuthProvider };

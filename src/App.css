@@ -36,18 +36,18 @@
     transform: rotate(360deg);
   }
 }
-.page-title{
+.page-title {
   display: block !important;
   text-align: center;
   font-size: 2rem;
   margin-top: 10px;
 }
-.register-container{
+.register-container {
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
-.register-container form{
-  width:40%
+.register-container form {
+  width: 40%;
 }
