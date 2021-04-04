@@ -4,7 +4,6 @@ import {
   Button,
   Card,
   Grid,
-  GridColumn,
   Icon,
   Image,
   Label,
@@ -12,18 +11,23 @@ import {
 import moment from "moment";
 import LikeButton from "../components/LikeButton";
 import { AuthContext } from "../context/auth";
+import DeleteButton from "../components/DeleteButton";
 
 const SinglePost = (props) => {
   const postId = props.match.params.postId;
   const { user } = useContext(AuthContext);
   console.log(postId);
   const {
-    data: { getPost },
+    data: { getPost } = {},
   } = useQuery(FETCH_POST_QUERY, {
     variables: {
       postId,
     },
   });
+
+const deletePostCallback = () =>{
+    props.history.push('/');
+}
 
   let postMarkup;
   if (!getPost) {
@@ -62,25 +66,29 @@ const SinglePost = (props) => {
                 as="div"
                 labelPosition="right"
                 onClick={() => console.log("Comment on Post")}
-              />
+            >
               <Button basic color="blue">
                 <Icon name="comments" />
               </Button>
               <Label basic color="blue" pointing="left">
                 {commentCount}
               </Label>
+              </Button>
+              {user && user.username === username && (
+                  <DeleteButton postId={id} callback={deletePostCallback} />
+              ) }
             </Card.Content>
           </Grid.Column>
         </Grid.Row>
       </Grid>
     );
   }
-  return <div></div>;
+  return postMarkup;
 };
 
 const FETCH_POST_QUERY = gql`
   query($postId: ID!) {
-    getPosts(postId: $postId) {
+    getPost(postId: $postId) {
       id
       body
       createdAt
