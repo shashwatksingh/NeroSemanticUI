@@ -3,7 +3,8 @@ import { Card, Image, Button, Icon, Label } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import moment from "moment";
 
-import { AuthContext } from '../context/auth';
+import { AuthContext } from "../context/auth";
+import LikeButton from "./LikeButton";
 
 const PostCard = ({
   post: { body, createdAt, id, username, likeCount, commentCount, likes },
@@ -26,15 +27,8 @@ const PostCard = ({
         <Card.Description>{body}</Card.Description>
       </Card.Content>
       <Card.Content extra>
-        <Button as="div" labelPosition="right" onClick={likePost}>
-          <Button color="teal" basic>
-            <Icon name="heart" />
-          </Button>
-          <Label basic color="red" pointing="left">
-            {likeCount}
-          </Label>
-        </Button>
-        <Button as="div" labelPosition="right" as={Link} to={`posts/${id}`}>
+        <LikeButton user={user} post={{ id, likes, likeCount }} />
+        <Button labelPosition="right" as={Link} to={`posts/${id}`}>
           <Button color="teal" basic>
             <Icon name="comments" />
           </Button>
@@ -42,13 +36,16 @@ const PostCard = ({
             {commentCount}
           </Label>
         </Button>
-        {
-          user && user.username === username && (
-            <Button as="div" color="red" floated="right" onClick={(_) => console.log('Delete Post')}>
-              <Icon name="trash" style={{margin: 0}} />
-            </Button>
-          )
-        }
+        {user && user.username === username && (
+          <Button
+            as="div"
+            color="red"
+            floated="right"
+            onClick={(_) => console.log("Delete Post")}
+          >
+            <Icon name="trash" style={{ margin: 0 }} />
+          </Button>
+        )}
       </Card.Content>
     </Card>
   );
